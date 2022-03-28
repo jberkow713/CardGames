@@ -22,6 +22,8 @@ class Player:
         self.name = name
         self.chips = chips
         self.hand = None
+        self.order = list(enumerate([2,3,4,5,6,7,8,9,10,'J', 'Q', 'K', 'Ace']))
+
 
     def __repr__(self):
         return f'{self.name} has {self.chips} chips'
@@ -36,10 +38,30 @@ class Player:
             game.redraw(self)
 
         print(f'You have {self.hand}')
-    
+    def find_high_card(self):
+        
+        if self.hand == None:
+            return 'Can not evaluate'
+        else:
+            Vals = [x.split()[0] for x in self.hand]
+            print(Vals)
+
+        high_val = -1
+        high_card=None
+        for card in Vals:
+            for val in self.order:
+                if card == val[1]:
+                    if val[0]>high_val:
+                        high_val= val[0]
+                        high_card = card
+        return high_card
+
+
+
     # def eval_hand(self):
         
         # ['8 D', 'Ace S', '3 S', 'K D', '3 C']
+
         
         # High Card no Pairs
         # Pair
@@ -121,3 +143,4 @@ class Draw:
 
 J = Player('Jesse', 100)
 J.play_draw()
+print(J.find_high_card())
