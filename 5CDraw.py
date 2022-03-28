@@ -23,6 +23,7 @@ class Player:
         self.chips = chips
         self.hand = None
         self.order = list(enumerate([2,3,4,5,6,7,8,9,10,'J', 'Q', 'K', 'Ace']))
+        self.rank = None
 
     def __repr__(self):
         return f'{self.name} has {self.chips} chips'
@@ -51,7 +52,7 @@ class Player:
                     if val[0]>high_val:
                         high_val= val[0]
                         high_card = card
-        print(f'You have {high_card} high')                
+                              
         return high_card
     
     # TODO
@@ -59,14 +60,59 @@ class Player:
     # # Betting system
     
     def eval_hand(self):
-        s = set()
+                
+        Low_Straight = False
+        Straight = False
+        Flush = False
+
+        nums = set()
+        suits = set()
     
-        for x in self.hand:
-            s.add(x)
-        # temporary placeholder
+        for Card in self.hand:
+            nums.add(Card.split()[0])
+            suits.add(Card.split()[1])
         
-        if len(s)==len(self.hand):
-            self.find_high_card()                
+        #All straights, flushes, and straight flushes
+        if len(nums)==len(self.hand):
+            if len(suits)==1:
+                Flush = True 
+                        
+            ordered = []
+            for x in nums:
+                for y in self.order:
+                    if x == str(y[1]):
+                        ordered.append(y[0])
+
+            o = sorted(ordered)
+            if o == [0,1,2,3,12]:
+                Low_Straight = True
+            if o[-1]-o[0]== len(self.hand)-1:
+                Straight = True     
+
+            if Straight==True and Flush == True:
+                if o[-1]==12:
+                    self.rank = 9
+                    return f' You have a Royal Flush'
+                else:
+                    self.rank = 8
+                    return f' You have a {self.find_high_card()} high straight flush'
+            
+            if Low_Straight ==True and Flush==True:
+                self.rank = 8
+                return 'You have a 5 high straight flush'
+            if Flush ==True and Low_Straight == False and Straight==False:
+                self.rank = 5    
+                return f' You have a {self.find_high_card()} high flush'
+            if Low_Straight == True and Flush == False:
+                self.rank = 4
+                return 'You have a 5 high straight'
+            if Straight == True and Flush == False:
+                self.rank = 4
+                return f'You have a {self.find_high_card()} high straight'
+            
+            self.rank = 0
+            return f'You have {self.find_high_card()} high'
+
         
         #pair:len(s)==len(self.hand)-1
         #2pair:len(s)==len(self.hand)-2
@@ -151,4 +197,4 @@ class Draw:
 
 J = Player('Jesse', 100)
 J.play_draw()
-J.eval_hand()
+print(J.eval_hand())
