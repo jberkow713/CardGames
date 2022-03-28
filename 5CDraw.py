@@ -6,7 +6,7 @@ class Card:
         self.color = color        
 
     def __repr__(self):
-        return f'{self.value}{self.color}'    
+        return f'{self.value} {self.color}'    
 
 class Deck:
     def __init__(self):
@@ -26,6 +26,7 @@ class Player:
     def __repr__(self):
         return f'{self.name} has {self.chips} chips'
 
+
     def play_draw(self):
         game = Draw()
         game.deal(self)
@@ -35,6 +36,28 @@ class Player:
             game.redraw(self)
 
         print(f'You have {self.hand}')
+    
+    # def eval_hand(self):
+        
+        # ['8 D', 'Ace S', '3 S', 'K D', '3 C']
+        
+        # High Card no Pairs
+        # Pair
+        # 2 Pair
+        # 3 of a kind
+        # straight
+        # flush
+        # Full house
+        # 4 of a kind
+        # straight flush
+        # royal (straight) flush
+
+
+
+
+    # # TODO
+    # # Hand Evaluator
+    # # Betting system
 
 class Draw:
     def __init__(self):
@@ -72,11 +95,21 @@ class Draw:
 
                 while Count >0:
                     available = input(f'Which of {player.hand} do you want to discard?')
-                    available = available.upper()
-                    if available in player.hand:
-                        player.hand.remove(available)
-                        returned.append(available)
-                        Count -=1
+                    if ' ' not in available:
+
+                        for Card in player.hand:
+                            card =Card.replace(' ', '')
+                            if available.upper() == card:
+                                returned.append(Card)
+                                player.hand.remove(Card)
+                                Count -=1
+                    else:
+                        card =available.upper()
+                        if card in player.hand:
+
+                            player.hand.remove(card)
+                            returned.append(card)
+                            Count -=1
 
                 for card in returned:
                     self.deck.append(card)
