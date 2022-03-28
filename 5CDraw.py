@@ -26,6 +26,16 @@ class Player:
     def __repr__(self):
         return f'{self.name} has {self.chips} chips'
 
+    def play_game(self):
+        game = Draw()
+        game.deal(self)
+
+
+        for i in range(2):
+            game.redraw(self)
+
+        print(f'You have {self.hand}')
+
 class Draw:
     def __init__(self):
         self.deck = Deck().deck
@@ -53,7 +63,7 @@ class Draw:
             if can_exit ==True:
                 break           
 
-            Count= int(input(f' You can draw up to {cards} cards. How many cards would you like to draw?: '))
+            Count= int(input(f' You have {player.hand}, you can draw up to {cards} cards. How many cards would you like to draw?: '))
             if Count <= cards:
                 can_exit = True
 
@@ -77,9 +87,4 @@ class Draw:
         print(f'You now have {player.hand}')
 
 J = Player('Jesse', 100)
-game = Draw()
-game.deal(J)
-print(J.hand)
-game.redraw(J)
-print(J.hand)
-print(len(game.deck))
+J.play_game()
