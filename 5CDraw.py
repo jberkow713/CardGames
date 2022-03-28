@@ -24,27 +24,24 @@ class Player:
         self.hand = None
         self.order = list(enumerate([2,3,4,5,6,7,8,9,10,'J', 'Q', 'K', 'Ace']))
 
-
     def __repr__(self):
         return f'{self.name} has {self.chips} chips'
-
 
     def play_draw(self):
         game = Draw()
         game.deal(self)
 
-
-        for i in range(2):
+        for _ in range(2):
             game.redraw(self)
 
         print(f'You have {self.hand}')
+
     def find_high_card(self):
         
         if self.hand == None:
             return 'Can not evaluate'
         else:
-            Vals = [x.split()[0] for x in self.hand]
-            print(Vals)
+            Vals = [x.split()[0] for x in self.hand]            
 
         high_val = -1
         high_card=None
