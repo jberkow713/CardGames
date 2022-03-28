@@ -26,7 +26,7 @@ class Player:
     def __repr__(self):
         return f'{self.name} has {self.chips} chips'
 
-    def play_game(self):
+    def play_draw(self):
         game = Draw()
         game.deal(self)
 
@@ -87,4 +87,4 @@ class Draw:
         print(f'You now have {player.hand}')
 
 J = Player('Jesse', 100)
-J.play_game()
+J.play_draw()
