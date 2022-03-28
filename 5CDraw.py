@@ -31,21 +31,10 @@ class Draw:
     def __init__(self):
         self.deck = Deck().deck
 
-    def deal(self, player):
+    def deal(self, player):        
+
+        player.hand = random.sample(self.deck,5)
         
-
-        hand = []
-        for i in range(5):
-            while True:
-
-                card = self.deck[random.randint(0,len(self.deck)-1)]
-                if card not in hand:
-                    hand.append(card)
-                    break
-                            
-        player.hand = hand         
-
-
 J = Player('Jesse', 100)
 print(J)
 
