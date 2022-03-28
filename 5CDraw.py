@@ -51,17 +51,31 @@ class Player:
                     if val[0]>high_val:
                         high_val= val[0]
                         high_card = card
+        print(f'You have {high_card} high')                
         return high_card
     
     # TODO
     # # Hand Evaluator
     # # Betting system
     
-    # def eval_hand(self):
+    def eval_hand(self):
+        s = set()
+    
+        for x in self.hand:
+            s.add(x)
+
+        if len(s)==len(self.hand):
+            self.find_high_card()                
         
-        # ['8 D', 'Ace S', '3 S', 'K D', '3 C']
-        
-        # High Card no Pairs
+        #pair:len(s)==len(self.hand)-1
+        #2pair:len(s)==len(self.hand)-2
+        #fullhouse:len(s)==len(self.hand-3)
+        #3kind = len(self.hand-2)
+
+        # for straight, flush, straight flush, royal flush,
+        # len(s)==len(self.hand)
+
+        #  
         # Pair
         # 2 Pair
         # 3 of a kind
@@ -134,4 +148,4 @@ class Draw:
 
 J = Player('Jesse', 100)
 J.play_draw()
-print(J.find_high_card())
+J.eval_hand()
