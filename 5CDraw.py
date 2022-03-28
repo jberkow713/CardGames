@@ -6,7 +6,7 @@ class Card:
         self.color = color        
 
     def __repr__(self):
-        return f'{self.value} {self.color}'    
+        return f'{self.value}{self.color}'    
 
 class Deck:
     def __init__(self):
@@ -24,7 +24,8 @@ class Player:
         self.hand = None
 
     def __repr__(self):
-        return f'{self.name} has {self.chips} chips'    
+        return f'{self.name} has {self.chips} chips'
+
 class Draw:
     def __init__(self):
         self.deck = Deck().deck
@@ -39,8 +40,7 @@ class Draw:
         Ace= False    
         hand = player.hand
         for card in hand:
-            val = card.split(' ')[0]
-            if val == 'Ace':
+            if 'Ace' in card:
                 Ace=True
                 break
         if Ace==False:
@@ -53,8 +53,7 @@ class Draw:
             if can_exit ==True:
                 break           
 
-            Count= input(f' You can draw up to {cards} cards. How many cards would you like to draw?: ')
-            Count = int(Count)
+            Count= int(input(f' You can draw up to {cards} cards. How many cards would you like to draw?: '))
             if Count <= cards:
                 can_exit = True
 
@@ -63,6 +62,7 @@ class Draw:
 
                 while Count >0:
                     available = input(f'Which of {player.hand} do you want to discard?')
+                    available = available.upper()
                     if available in player.hand:
                         player.hand.remove(available)
                         returned.append(available)
@@ -72,6 +72,7 @@ class Draw:
                     self.deck.append(card)
                 for card in new_cards:
                     player.hand.append(card)
+                    self.deck.remove(card)
 
         print(f'You now have {player.hand}')
 
@@ -81,3 +82,4 @@ game.deal(J)
 print(J.hand)
 game.redraw(J)
 print(J.hand)
+print(len(game.deck))
