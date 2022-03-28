@@ -63,7 +63,8 @@ class Player:
     
         for x in self.hand:
             s.add(x)
-
+        # temporary placeholder
+        
         if len(s)==len(self.hand):
             self.find_high_card()                
         
@@ -74,6 +75,8 @@ class Player:
 
         # for straight, flush, straight flush, royal flush,
         # len(s)==len(self.hand)
+        # TODO
+        # solve the straight issue, flush issue, high card
 
         #  
         # Pair
