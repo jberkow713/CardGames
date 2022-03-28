@@ -55,13 +55,14 @@ class Player:
                         high_val= val[0]
                         high_card = card
         return high_card
-
-
-
+    
+    # TODO
+    # # Hand Evaluator
+    # # Betting system
+    
     # def eval_hand(self):
         
         # ['8 D', 'Ace S', '3 S', 'K D', '3 C']
-
         
         # High Card no Pairs
         # Pair
@@ -73,13 +74,6 @@ class Player:
         # 4 of a kind
         # straight flush
         # royal (straight) flush
-
-
-
-
-    # # TODO
-    # # Hand Evaluator
-    # # Betting system
 
 class Draw:
     def __init__(self):
