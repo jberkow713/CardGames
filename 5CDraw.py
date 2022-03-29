@@ -57,8 +57,7 @@ class Player:
         return high_card
     
     # TODO
-    # # Hand Evaluator
-    # # Betting system
+    # Betting system
     
     def eval_hand(self):
                 
@@ -163,25 +162,7 @@ class Player:
             for card in nums:
                 Cards.remove(card)
             self.rank = 7
-            return f"You have 4 {Cards[0]}'s!"        
-        
-        #2pair:len(s)==len(self.hand)-2
-        #fullhouse:len(s)==len(self.hand-3)
-        #3kind = len(self.hand-2)
-        
-        # TODO
-        # 2 pair, 3 of a kind, full house
-
-        #  
-        # Pair
-        # 2 Pair
-        # 3 of a kind
-        # straight
-        # flush
-        # Full house
-        # 4 of a kind
-        # straight flush
-        # royal (straight) flush
+            return f"You have 4 {Cards[0]}'s!"                
 
 class Draw:
     def __init__(self):
