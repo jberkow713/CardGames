@@ -14,7 +14,7 @@ class Deck:
 
     def create_deck(self):
         colors = ['H', 'D', 'S', 'C']
-        values = [2,3,4,5,6,7,8,9,10,'J', 'Q', 'K', 'Ace']
+        values = [2,3,4,5,6,7,8,9,10,'J', 'Q', 'K', 'ACE']
         return [str(Card(value, color)) for value in values for color in colors]
 
 class Player:
@@ -22,7 +22,7 @@ class Player:
         self.name = name
         self.chips = chips
         self.hand = None
-        self.order = list(enumerate([2,3,4,5,6,7,8,9,10,'J', 'Q', 'K', 'Ace']))
+        self.order = list(enumerate([2,3,4,5,6,7,8,9,10,'J', 'Q', 'K', 'ACE']))
         self.rank = None
 
     def __repr__(self):
@@ -120,8 +120,36 @@ class Player:
             for card in nums:
                 Cards.remove(card)
 
-            self.rank = 2
+            self.rank = 1
             return f"You have a pair of {Cards[0]}'s"    
+        elif len(nums)==len(self.hand)-2:
+                        
+            for card in nums:
+                Cards.remove(card)
+
+            if Cards[0]==Cards[1]:
+
+                self.rank = 3
+                return f"You have three {Cards[0]}'s" 
+            else:
+                self.rank = 2
+                ordered = []
+                for x in Cards:
+                    for y in self.order:
+                        if x == str(y[1]):
+                            ordered.append(y[0])
+
+                o = sorted(ordered, reverse=True)
+                two_pair = []
+                for val in o:
+                    for x in self.order:
+                        if val == x[0]:
+                            two_pair.append(x[1])
+                return f"You have {two_pair[0]}'s and {two_pair[1]}'s"            
+
+
+
+
 
         
         
