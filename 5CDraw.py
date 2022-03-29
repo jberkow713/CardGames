@@ -46,10 +46,10 @@ class Player:
             Vals = [x.split()[0] for x in self.hand]            
 
         high_val = -1
-        
+        high_card = None
         for card in Vals:
             for val in self.order:
-                if card == val[1]:
+                if card == str(val[1]):
                     if val[0]>high_val:
                         high_val= val[0]
                         high_card = card
@@ -158,16 +158,12 @@ class Player:
                     first = k
                 elif v ==1:
                     second = k
-            return f"You have a full house! {first}'s and {second}'s"         
-
-
-
-
-
-
-
-
-        
+            return f"You have a full house! {first}'s and {second}'s"
+        elif len(nums)==len(self.hand)-4:
+            for card in nums:
+                Cards.remove(card)
+            self.rank = 7
+            return f"You have 4 {Cards[0]}'s!"        
         
         #2pair:len(s)==len(self.hand)-2
         #fullhouse:len(s)==len(self.hand-3)
