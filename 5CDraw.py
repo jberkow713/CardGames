@@ -1,5 +1,8 @@
 import random
 from collections import Counter
+import json
+import ast
+
 
 class Card:
     def __init__(self, value, color):
@@ -19,18 +22,47 @@ class Deck:
         return [str(Card(value, color)) for value in values for color in colors]
 
 class Player:
-    def __init__(self, name, chips):
+    def __init__(self, name):
         self.name = name
-        self.chips = chips
+        self.chips = None
         self.bet =0
         self.hand = None
         self.order = list(enumerate([2,3,4,5,6,7,8,9,10,'J', 'Q', 'K', 'ACE']))
         self.rank = None
+    
+    def load_chips(self):
+        f = open('chips.json')
+        data = json.load(f)
+        data = ast.literal_eval(str(data))
 
+        if self.name in data.keys():
+            if data[self.name]==0:
+                print('Welcome back loser, here are some more chips!')
+                self.chips = 1000
+
+            else:
+                self.chips = data[self.name]
+        
+
+        else:
+            self.chips = 1000
+
+        print(f'Welcome back {self.name}, you have {self.chips} chips. Enjoy your stay!')   
+
+    def save_chips(self):
+        f = open('chips.json')
+        data = json.load(f)
+        data = ast.literal_eval(str(data))
+        data[self.name]=self.chips
+
+        with open('chips.json', 'w') as fp:
+            json.dump(data, fp)
+        
     def __repr__(self):
         return f'{self.name} has {self.chips} chips'
 
     def play_draw(self):
+        self.load_chips()
         game = Draw()
         game.deal(self)
 
@@ -38,6 +70,7 @@ class Player:
             game.redraw(self)
 
         print(f'You have {self.hand}')
+        self.save_chips()
 
     def find_high_card(self):
         
@@ -182,6 +215,7 @@ class Draw:
     def redraw(self, player):
         player.bet = 0
 
+
         Ace= False    
         hand = player.hand
         for card in hand:
@@ -210,6 +244,7 @@ class Draw:
 
             new_cards = random.sample(self.deck,Count)
             returned = []
+            
             
             if player.chips >0:
 
@@ -258,8 +293,10 @@ class Draw:
         
         print(f'You now have {player.hand}')
 
-J = Player('Jesse', 100)
+
+
+J = Player('Jesse')
 J.play_draw()
 print(J.eval_hand())
 J.return_bet()
-print(J.chips)
+J.save_chips()
