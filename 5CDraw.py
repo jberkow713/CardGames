@@ -38,7 +38,7 @@ class Player:
         if self.name in data.keys():
             if data[self.name]==0:
                 print('Welcome back loser, here are some more chips!')
-                self.chips = 1000
+                self.chips = 200
 
             else:
                 self.chips = data[self.name]
