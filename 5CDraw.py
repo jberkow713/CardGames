@@ -221,7 +221,7 @@ class Draw:
                         Bet =  int(Bet)
                         fair_bet = True 
                     except ValueError:
-                        "Entered value is invalid, please try again"
+                        print("Entered value is invalid, please try again")
                     
                     if fair_bet == True:
 
