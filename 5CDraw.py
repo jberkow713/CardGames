@@ -71,7 +71,8 @@ class Player:
         for Card in self.hand:
             nums.add(Card.split()[0])
             suits.add(Card.split()[1])
-        
+        Cards = [x.split()[0] for x in self.hand]
+
         #All straights, flushes, and straight flushes
         if len(nums)==len(self.hand):
             if len(suits)==1:
@@ -113,24 +114,21 @@ class Player:
             self.rank = 0
             return f'You have {self.find_high_card()} high'
         elif len(nums)==len(self.hand)-1:
-            Cards = [x.split()[0] for x in self.hand]
+            
             for card in nums:
                 Cards.remove(card)
 
             self.rank = 2
             return f"You have a pair of {Cards[0]}'s"    
 
-            
-
-
         
-        #pair:len(s)==len(self.hand)-1
+        
         #2pair:len(s)==len(self.hand)-2
         #fullhouse:len(s)==len(self.hand-3)
         #3kind = len(self.hand-2)
         
         # TODO
-        # solve pair, 2 pair, 3 of a kind, full house
+        # 2 pair, 3 of a kind, full house
 
         #  
         # Pair
