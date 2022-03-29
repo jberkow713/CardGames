@@ -71,6 +71,8 @@ class Player:
         for Card in self.hand:
             nums.add(Card.split()[0])
             suits.add(Card.split()[1])
+        
+        # to compare to nums in situations
         Cards = [x.split()[0] for x in self.hand]
 
         #All straights, flushes, and straight flushes
@@ -159,45 +161,51 @@ class Draw:
                 Ace=True
                 break
         if Ace==False:
-            cards = 3
+            cards = ['0','1','2','3']
         elif Ace==True:
-            cards = 4       
+            cards = ['0','1','2','3','4']       
         can_exit = False
         
         while True:
             if can_exit ==True:
                 break           
 
-            Count= int(input(f' You have {player.hand}, you can draw up to {cards} cards. How many cards would you like to draw?: '))
-            if Count <= cards:
-                can_exit = True
+            while True:
 
-                new_cards = random.sample(self.deck,Count)
-                returned = []
+                Count= input(f' You have {player.hand}, you can draw up to {int(cards[-1])} cards. How many cards would you like to draw?: ')
+                
+                if Count in cards:
+                    Count = int(Count)                
+                
+                    can_exit = True
+                    break
 
-                while Count >0:
-                    available = input(f'Which of {player.hand} do you want to discard?')
-                    if ' ' not in available:
+            new_cards = random.sample(self.deck,Count)
+            returned = []
 
-                        for Card in player.hand:
-                            card =Card.replace(' ', '')
-                            if available.upper() == card:
-                                returned.append(Card)
-                                player.hand.remove(Card)
-                                Count -=1
-                    else:
-                        card =available.upper()
-                        if card in player.hand:
+            while Count >0:
+                available = input(f'Which of {player.hand} do you want to discard?')
+                if ' ' not in available:
 
-                            player.hand.remove(card)
-                            returned.append(card)
+                    for Card in player.hand:
+                        card =Card.replace(' ', '')
+                        if available.upper() == card:
+                            returned.append(Card)
+                            player.hand.remove(Card)
                             Count -=1
+                else:
+                    card =available.upper()
+                    if card in player.hand:
 
-                for card in returned:
-                    self.deck.append(card)
-                for card in new_cards:
-                    player.hand.append(card)
-                    self.deck.remove(card)
+                        player.hand.remove(card)
+                        returned.append(card)
+                        Count -=1
+
+            for card in returned:
+                self.deck.append(card)
+            for card in new_cards:
+                player.hand.append(card)
+                self.deck.remove(card)
 
         print(f'You now have {player.hand}')
 
