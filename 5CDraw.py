@@ -1,4 +1,5 @@
 import random
+from collections import Counter
 
 class Card:
     def __init__(self, value, color):
@@ -45,7 +46,7 @@ class Player:
             Vals = [x.split()[0] for x in self.hand]            
 
         high_val = -1
-        high_card=None
+        
         for card in Vals:
             for val in self.order:
                 if card == val[1]:
@@ -146,6 +147,21 @@ class Player:
                         if val == x[0]:
                             two_pair.append(x[1])
                 return f"You have {two_pair[0]}'s and {two_pair[1]}'s"            
+        # full house
+        elif len(nums)==len(self.hand)-3:
+            for card in nums:
+                Cards.remove(card)
+            self.rank =6
+            c = Counter(Cards)
+            for k,v in c.items():
+                if v == 2:
+                    first = k
+                elif v ==1:
+                    second = k
+            return f"You have a full house! {first}'s and {second}'s"         
+
+
+
 
 
 
