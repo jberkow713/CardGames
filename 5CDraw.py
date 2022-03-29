@@ -22,6 +22,7 @@ class Player:
     def __init__(self, name, chips):
         self.name = name
         self.chips = chips
+        self.bet =0
         self.hand = None
         self.order = list(enumerate([2,3,4,5,6,7,8,9,10,'J', 'Q', 'K', 'ACE']))
         self.rank = None
@@ -55,10 +56,7 @@ class Player:
                         high_card = card
                               
         return high_card
-    
-    # TODO
-    # Betting system
-    
+        
     def eval_hand(self):
                 
         Low_Straight = False
@@ -119,8 +117,13 @@ class Player:
             
             for card in nums:
                 Cards.remove(card)
-
-            self.rank = 1
+            for y in self.order:
+                if Cards[0] == str(y[1]):
+                    if y[0]>=9:
+                        self.rank=1                      
+                    else:
+                        self.rank = 0
+            
             return f"You have a pair of {Cards[0]}'s"    
         elif len(nums)==len(self.hand)-2:
                         
@@ -163,6 +166,9 @@ class Player:
                 Cards.remove(card)
             self.rank = 7
             return f"You have 4 {Cards[0]}'s!"                
+    def return_bet(self):
+        bet_dict = {0:0, 1:1.2, 2:1.5, 3:2, 4:3, 5:5, 6:10, 7:30, 8:100, 9:1000}
+        self.chips += int(self.bet*bet_dict[self.rank])
 
 class Draw:
     def __init__(self):
@@ -174,6 +180,7 @@ class Draw:
             self.deck.remove(card)
     
     def redraw(self, player):
+        player.bet = 0
 
         Ace= False    
         hand = player.hand
@@ -203,6 +210,26 @@ class Draw:
 
             new_cards = random.sample(self.deck,Count)
             returned = []
+            
+            if player.chips >0:
+
+                while True:
+                    
+                    fair_bet = False
+                    Bet = input(f'You have {player.chips} chips, how much would you like to bet?')
+                    try:
+                        Bet =  int(Bet)
+                        fair_bet = True 
+                    except ValueError:
+                        "Entered value is invalid, please try again"
+                    
+                    if fair_bet == True:
+
+                        if Bet >=0 and Bet <=player.chips:
+                            player.chips -=Bet
+                            player.bet +=Bet
+                            break 
+
 
             while Count >0:
                 available = input(f'Which of {player.hand} do you want to discard?')
@@ -227,9 +254,12 @@ class Draw:
             for card in new_cards:
                 player.hand.append(card)
                 self.deck.remove(card)
-
+        
+        
         print(f'You now have {player.hand}')
 
 J = Player('Jesse', 100)
 J.play_draw()
 print(J.eval_hand())
+J.return_bet()
+print(J.chips)
