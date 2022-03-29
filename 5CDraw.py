@@ -112,17 +112,25 @@ class Player:
             
             self.rank = 0
             return f'You have {self.find_high_card()} high'
+        elif len(nums)==len(self.hand)-1:
+            Cards = [x.split()[0] for x in self.hand]
+            for card in nums:
+                Cards.remove(card)
+
+            self.rank = 2
+            return f"You have a pair of {Cards[0]}'s"    
+
+            
+
 
         
         #pair:len(s)==len(self.hand)-1
         #2pair:len(s)==len(self.hand)-2
         #fullhouse:len(s)==len(self.hand-3)
         #3kind = len(self.hand-2)
-
-        # for straight, flush, straight flush, royal flush,
-        # len(s)==len(self.hand)
+        
         # TODO
-        # solve the straight issue, flush issue, high card
+        # solve pair, 2 pair, 3 of a kind, full house
 
         #  
         # Pair
