@@ -130,26 +130,26 @@ class Player:
             if Straight==True and Flush == True:
                 if o[-1]==12:
                     self.rank = 9
-                    return f' You have a Royal Flush'
+                    print(f' You have a Royal Flush')
                 else:
                     self.rank = 8
-                    return f' You have a {self.find_high_card()} high straight flush'
+                    print(f' You have a {self.find_high_card()} high straight flush')
             
             if Low_Straight ==True and Flush==True:
                 self.rank = 8
-                return 'You have a 5 high straight flush'
+                print('You have a 5 high straight flush')
             if Flush ==True and Low_Straight == False and Straight==False:
                 self.rank = 5    
-                return f' You have a {self.find_high_card()} high flush'
+                print(f' You have a {self.find_high_card()} high flush')
             if Low_Straight == True and Flush == False:
                 self.rank = 4
-                return 'You have a 5 high straight'
+                print('You have a 5 high straight')
             if Straight == True and Flush == False:
                 self.rank = 4
-                return f'You have a {self.find_high_card()} high straight'
+                print(f'You have a {self.find_high_card()} high straight')
             
             self.rank = 0
-            return f'You have {self.find_high_card()} high'
+            print(f'You have {self.find_high_card()} high')
         elif len(nums)==len(self.hand)-1:
             
             for card in nums:
@@ -161,7 +161,7 @@ class Player:
                     else:
                         self.rank = 0
             
-            return f"You have a pair of {Cards[0]}'s"    
+            print(f"You have a pair of {Cards[0]}'s")    
         elif len(nums)==len(self.hand)-2:
                         
             for card in nums:
@@ -170,7 +170,7 @@ class Player:
             if Cards[0]==Cards[1]:
 
                 self.rank = 3
-                return f"You have three {Cards[0]}'s" 
+                print(f"You have three {Cards[0]}'s") 
             else:
                 self.rank = 2
                 ordered = []
@@ -185,7 +185,7 @@ class Player:
                     for x in self.order:
                         if val == x[0]:
                             two_pair.append(x[1])
-                return f"You have {two_pair[0]}'s and {two_pair[1]}'s"            
+                print(f"You have {two_pair[0]}'s and {two_pair[1]}'s")            
         # full house
         elif len(nums)==len(self.hand)-3:
             for card in nums:
@@ -197,12 +197,12 @@ class Player:
                     first = k
                 elif v ==1:
                     second = k
-            return f"You have a full house! {first}'s and {second}'s"
+            print(f"You have a full house! {first}'s and {second}'s")
         elif len(nums)==len(self.hand)-4:
             for card in nums:
                 Cards.remove(card)
             self.rank = 7
-            return f"You have 4 {Cards[0]}'s!"                
+            print(f"You have 4 {Cards[0]}'s!")                
     def return_bet(self):
         bet_dict = {0:0, 1:1.2, 2:1.5, 3:2, 4:3, 5:5, 6:10, 7:30, 8:100, 9:1000}
         self.chips += int(self.bet*bet_dict[self.rank])
@@ -297,13 +297,19 @@ class Draw:
         
         print(f'You now have {player.hand}')
 
+class Casino:
+    def __init__(self, name):
+        self.player = Player(name)
+        
 
+    def Play_Draw(self):
+        self.player.play_draw()
+        self.player.eval_hand()
+        self.player.return_bet()
+        self.player.save_chips()
 
-J = Player('Jesse')
-J.play_draw()
-print(J.eval_hand())
-J.return_bet()
-J.save_chips()
+C = Casino('Jesse')
+C.Play_Draw()
 
 
 # data = {}
