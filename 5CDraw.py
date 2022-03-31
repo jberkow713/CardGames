@@ -31,9 +31,13 @@ class Player:
         self.rank = None
     
     def load_chips(self):
-        f = open('chips.json')
-        data = json.load(f)
-        data = ast.literal_eval(str(data))
+        with open('chips.json', 'r') as j:
+            data = json.loads(j.read())
+        
+        
+        # f = open('chips.json')
+        # data = json.load(f)
+        # data = ast.literal_eval(str(data))
 
         if self.name in data.keys():
             if data[self.name]==0:
@@ -300,3 +304,14 @@ J.play_draw()
 print(J.eval_hand())
 J.return_bet()
 J.save_chips()
+
+
+# data = {}
+# with open('chips.json', 'w') as fp:
+#     json.dump(data, fp)
+
+# io = open("chips.json","r")
+# string = io.read()
+# # json.loads(str)
+# dictionary = json.loads(string)
+# print(dictionary)
